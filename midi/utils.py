@@ -23,7 +23,7 @@ class midiread(MidiOutStream):
     midi_in.read()
     self.notes = [n for n in self.notes if n[2] is not None]  # purge incomplete notes
 
-    length = int(numpy.ceil(max(zip(*self.notes)[2]) / dt))  # create piano-roll
+    length = int(numpy.ceil(max(list(zip(*self.notes))[2]) / dt))  # create piano-roll
     self.piano_roll = numpy.zeros((length, r[1]-r[0]))
     for n in self.notes:
       self.piano_roll[int(numpy.ceil(n[1]/dt)) : int(numpy.ceil(n[2]/dt)), n[0]-r[0]] = 1
