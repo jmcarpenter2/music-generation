@@ -4,7 +4,7 @@
 import sys
 from types import *
 from struct import unpack
-from io import StringIO
+from io import StringIO, BytesIO
 
 # custom import
 from DataTypeConverters import writeBew, writeVar, fromBytes
@@ -18,7 +18,7 @@ class RawOutstreamFile:
     """
 
     def __init__(self, outfile=''):
-        self.buffer = StringIO()
+        self.buffer = BytesIO()
         self.outfile = outfile
 
 
@@ -27,7 +27,10 @@ class RawOutstreamFile:
 
     def writeSlice(self, str_slice):
         "Writes the next text slice to the raw data"
-        self.buffer.write(str_slice)
+        if isinstance(str_slice, str):
+            self.buffer.write(str_slice.encode())
+        else:
+            self.buffer.write(str_slice)
         
         
     def writeBew(self, value, length=1):
@@ -43,7 +46,7 @@ class RawOutstreamFile:
     def write(self):
         "Writes to disc"
         if self.outfile:
-            if isinstance(self.outfile, StringType):
+            if isinstance(self.outfile, str):
                 outfile = open(self.outfile, 'wb')
                 outfile.write(self.getvalue())
                 outfile.close()
