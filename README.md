@@ -1,2 +1,2 @@
-# music-generation
-A personal project aimed at generating new music given an input sequence
+# Music Generation on PyTorch using LSTM 
+Learning the pattern in EDM music usin LSTM to generate new music based on the pattern
